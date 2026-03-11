@@ -1,4 +1,4 @@
-## To run tha app locally
+## To run the app locally
 1. Run the database docker container (you can open the root directory of the project in the IntelliJIdea and press the run button for the 'postgres' service)
 2. Open pgAdmin and create database with credentials: user - 'root', password - 'password'
 2. External port from the computer shouldn't be busy by internal process (for example, by your computer postgres server), the default port is 5432, try different, f.e. 5433
