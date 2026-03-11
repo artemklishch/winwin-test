@@ -1,0 +1,37 @@
+version: "3.8"
+
+services:
+  postgres:
+    image: postgres:15
+    environment:
+      POSTGRES_DB: winwintravel
+      POSTGRES_USER: root
+      POSTGRES_PASSWORD: password
+    ports:
+      - "5433:5432"
+
+  auth-api:
+    build:
+      context: ./auth-api
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080"
+    depends_on:
+      - postgres
+      - data-api
+    environment:
+      POSTGRES_URL: jdbc:postgresql://postgres:5432/winwintravel
+      POSTGRES_USER: root
+      POSTGRES_PASSWORD: password
+      JWT_SECRET: some_test_secret_api_12345678_text_klisch_secret
+      INTERNAL_TOKEN: internal-secret
+      DATA_API_URL: http://data-api:8081
+
+  data-api:
+    build:
+      context: ./data-api
+      dockerfile: Dockerfile
+    ports:
+      - "8081:8081"
+    environment:
+      INTERNAL_TOKEN: internal-secret
